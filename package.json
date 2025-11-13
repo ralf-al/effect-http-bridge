@@ -1,0 +1,67 @@
+{
+  "name": "effect-http-bridge",
+  "version": "0.1.0",
+  "description": "Type-safe HTTP client for Effect HTTP api with tRPC-like ergonomics.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/YOUR_USERNAME/effect-http-bridge#readme",
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/effect-http-bridge/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOUR_USERNAME/effect-http-bridge.git"
+  },
+  "author": "YOUR_NAME <YOUR_EMAIL>",
+  "keywords": [
+    "effect",
+    "effect-ts",
+    "http",
+    "api",
+    "client",
+    "rpc",
+    "trpc",
+    "typescript",
+    "type-safe",
+    "server",
+    "bridge",
+    "async",
+    "result"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build"
+  },
+  "peerDependencies": {
+    "effect": "^3.0.0",
+    "@effect/platform": "^0.68.0"
+  },
+  "devDependencies": {
+    "@effect/platform": "^0.68.27",
+    "@types/node": "^24.10.0",
+    "bumpp": "^10.3.1",
+    "effect": "^3.11.8",
+    "tsdown": "^0.16.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
