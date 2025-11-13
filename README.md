@@ -4,7 +4,7 @@ Type-safe HTTP client for [Effect HTTP APIs](https://github.com/Effect-TS/effect
 
 ## Why?
 
-Effect's HTTP API is powerful but requires Effect runtime knowledge. This library bridges that gap:
+Effect's HTTP API is powerful, but adopting Effect across your entire stack can be daunting. This library lets you incrementally adopt Effect or leverage its amazing capabilities on the backend without needing to learn the Effect runtime:
 
 - 🎯 **tRPC-like DX**: `client.group.endpoint(params)` - fully typed
 - 🔄 **Promise-based**: Works with `async/await` - no Effect runtime needed
@@ -16,13 +16,14 @@ Effect's HTTP API is powerful but requires Effect runtime knowledge. This librar
 ## Installation
 
 ```bash
-# npm
 npm install effect-http-bridge
+```
 
-# pnpm
+```bash
 pnpm add effect-http-bridge
+```
 
-# bun
+```bash
 bun add effect-http-bridge
 ```
 
@@ -52,7 +53,7 @@ import { HttpBridge } from "effect-http-bridge";
 import { FetchHttpClient } from "@effect/platform";
 import { Api } from "./api";
 
-export class CountClient extends HttpBridge.Tag<CountClient>()("CountClient", {
+export class ApiClient extends HttpBridge.Tag<ApiClient>()("ApiClient", {
   api: Api,
   httpClient: FetchHttpClient.layer,
   baseUrl: "http://localhost:3000",
@@ -65,10 +66,10 @@ The client works with `async/await` and returns `Promise<Result<A, E>>`:
 
 ```typescript
 // In a React Server Component
-const result = await CountClient.query("counter", "count", {});
+const result = await ApiClient.query("counter", "count", {});
 
 // In a Server Action
-const result = await CountClient.mutation("counter", "increment")({});
+const result = await ApiClient.mutation("counter", "increment")({});
 ```
 
 ## Usage Examples
@@ -78,11 +79,11 @@ const result = await CountClient.mutation("counter", "increment")({});
 Use `Result.builder()` for type-safe pattern matching in your UI:
 
 ```typescript
-import { Result } from "effect-http-bridge"
-import { CountClient } from "./client"
+import { Result } from "effect-http-bridge";
+import { ApiClient } from "./api";
 
 export default async function Page() {
-  const result = await CountClient.query("counter", "count", {})
+  const result = await ApiClient.query("counter", "count", {});
 
   return (
     <div>
@@ -101,20 +102,16 @@ export default async function Page() {
           </div>
         ))
         .onErrorTag("ResponseError", (error) => (
-          <div className="text-red-600">
-            Server error: {error.message}
-          </div>
+          <div className="text-red-600">Server error: {error.message}</div>
         ))
         .onDefect((defect) => (
-          <div className="text-red-600">
-            Unexpected error: {String(defect)}
-          </div>
+          <div className="text-red-600">Unexpected error: {String(defect)}</div>
         ))
         .orElse(() => (
           <div className="text-red-600">Unknown error</div>
         ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -129,10 +126,10 @@ Multiple patterns for handling results in server actions:
 
 import { Result } from "effect-http-bridge";
 import { Cause } from "effect";
-import { CountClient } from "./client";
+import { ApiClient } from "./api";
 
 export async function incrementCounter() {
-  const result = await CountClient.mutation("counter", "increment")({});
+  const result = await ApiClient.mutation("counter", "increment")({});
 
   if (Result.isFailure(result)) {
     return {
@@ -155,10 +152,10 @@ export async function incrementCounter() {
 
 import { Result } from "effect-http-bridge";
 import { Cause } from "effect";
-import { CountClient } from "./client";
+import { ApiClient } from "./api";
 
 export async function getCount() {
-  const result = await CountClient.query("counter", "count", {});
+  const result = await ApiClient.query("counter", "count", {});
 
   return Result.match(result, {
     onSuccess: (s) => ({
@@ -179,10 +176,10 @@ export async function getCount() {
 "use server";
 
 import { Result } from "effect-http-bridge";
-import { CountClient } from "./client";
+import { ApiClient } from "./api";
 
 export async function deleteUser(userId: string) {
-  const result = await CountClient.mutation(
+  const result = await ApiClient.mutation(
     "users",
     "delete"
   )({
@@ -224,10 +221,10 @@ export async function deleteUser(userId: string) {
 "use server";
 
 import { Result } from "effect-http-bridge";
-import { CountClient } from "./client";
+import { ApiClient } from "./api";
 
 export async function getCountOrThrow() {
-  const result = await CountClient.query("counter", "count", {});
+  const result = await ApiClient.query("counter", "count", {});
 
   // Throws if failure, returns value if success
   return Result.getOrThrow(result);
@@ -240,10 +237,10 @@ export async function getCountOrThrow() {
 "use server";
 
 import { Result } from "effect-http-bridge";
-import { CountClient } from "./client";
+import { ApiClient } from "./api";
 
 export async function getCountWithDefault() {
-  const result = await CountClient.query("counter", "count", {});
+  const result = await ApiClient.query("counter", "count", {});
 
   // Returns default if failure
   return Result.getOrElse(result, () => 0);
