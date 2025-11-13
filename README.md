@@ -307,6 +307,10 @@ Full type inference for:
 - Error types (tagged unions)
 - Pattern matching exhaustiveness
 
+## Acknowledgments
+
+This library was inspired by and borrows concepts & code from [effect-atom](https://github.com/tim-smart/effect-atom) by [@tim-smart](https://github.com/tim-smart). Special thanks for the excellent work on bridging Effect with React and demonstrating patterns for integrating Effect's `HttpApi` in a more accessible way.
+
 ## License
 
 MIT
