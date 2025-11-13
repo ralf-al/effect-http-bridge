@@ -1,18 +1,18 @@
 {
   "name": "effect-http-bridge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Type-safe HTTP client for Effect HTTP api with tRPC-like ergonomics.",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://github.com/YOUR_USERNAME/effect-http-bridge#readme",
+  "homepage": "https://github.com/ralf-al/effect-http-bridge#readme",
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/effect-http-bridge/issues"
+    "url": "https://github.com/ralf-al/effect-http-bridge/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR_USERNAME/effect-http-bridge.git"
+    "url": "git+https://github.com/ralf-al/effect-http-bridge.git"
   },
-  "author": "YOUR_NAME <YOUR_EMAIL>",
+  "author": "Ralf ",
   "keywords": [
     "effect",
     "effect-ts",
